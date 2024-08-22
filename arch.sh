@@ -25,10 +25,20 @@ echo -ne "
 sleep 2
 
 # Update system and configure Pacman
-pacman -Syyu --noconfirm --needed
 timedatectl set-ntp true
-pacman -S archlinux-keyring --noconfirm --needed
+pacman -S reflector --noconfirm --needed
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+echo -ne "
+-------------------------------------------------------------------------
+                     Reflector
+                     Creating mirror list backup
+-------------------------------------------------------------------------
+"
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
+
+reflector -c Germany -a 12 -p https -p http --sort --rate --save /etc/pacman.d/mirrorlist
+
+pacman -Syyu --noconfirm --needed
 
 echo -ne "
 -------------------------------------------------------------------------
