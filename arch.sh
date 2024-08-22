@@ -317,7 +317,8 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
-git clone git@github.com:Melal1/suckless.git
+git clone https://github.com/Melal1/suckless.git
+
 
 echo -ne "
 -------------------------------------------------------------------------
