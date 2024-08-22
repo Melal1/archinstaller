@@ -38,7 +38,7 @@ echo -ne "
 "
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
 
-reflector -c Germany -a 12 -p https -p http --sort --rate --save /etc/pacman.d/mirrorlist
+reflector -a 48 -c Germany -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 sleep 2
 
 pacman -Syyu --noconfirm --needed
