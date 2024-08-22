@@ -28,6 +28,8 @@ sleep 2
 timedatectl set-ntp true
 pacman -S reflector --noconfirm --needed
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+sed -i 's/^#Color/Color/' /etc/pacman.conf
+
 echo -ne "
 -------------------------------------------------------------------------
                      Reflector
@@ -37,8 +39,10 @@ echo -ne "
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
 
 reflector -c Germany -a 12 -p https -p http --sort --rate --save /etc/pacman.d/mirrorlist
+sleep 2
 
 pacman -Syyu --noconfirm --needed
+
 
 echo -ne "
 -------------------------------------------------------------------------
