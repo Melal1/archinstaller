@@ -22,7 +22,7 @@ echo -ne "
                     your disk before running this script !!!!
 -------------------------------------------------------------------------
 "
-sleep 2
+sleep 1
 
 # Update system and configure Pacman
 timedatectl set-ntp true
