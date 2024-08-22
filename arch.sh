@@ -26,7 +26,7 @@ sleep 2
 
 # Update system and configure Pacman
 timedatectl set-ntp true
-pacman -S reflector --noconfirm --needed
+ pacman -S --noconfirm archlinux-keyring 
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
@@ -41,7 +41,6 @@ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
 reflector -a 48 -c Germany -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 sleep 2
 
-pacman -Syyu --noconfirm --needed
 
 
 echo -ne "
