@@ -39,7 +39,7 @@ echo -ne "
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
 
 reflector -a 48 -c Iran -c Germany -c France -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
-sleep 2
+
 
 
 
@@ -79,7 +79,7 @@ echo -ne "\nCreated /mnt/$boot\n"
 
 mount /dev/"$EFI" /mnt/"$boot"
 echo -ne "\nMounted /dev/$EFI with /mnt\n"
-sleep 1
+
 
 echo -ne "
 Done !!
@@ -226,7 +226,7 @@ sec_vm() {
     fi
 }
 sec_vm
-sleep 2
+
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -266,7 +266,7 @@ echo -ne "
                           Setup-2 (arch-chroot)
 -------------------------------------------------------------------------
 "
-sleep 2
+
 
 ln -sf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
 hwclock --systohc
