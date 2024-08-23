@@ -330,7 +330,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
-git clone https://github.com/Melal1/suckless.git
+ehco "git clone https://github.com/Melal1/suckless.git" >> repo.txt
 
 
 echo -ne "
