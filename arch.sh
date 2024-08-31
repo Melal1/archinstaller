@@ -329,8 +329,7 @@ echo -ne "
                           Installing Melal's Suckless Repository
 -------------------------------------------------------------------------
 "
-
-ehco "git clone https://github.com/Melal1/suckless.git" >> repo.txt
+git clone https://github.com/Melal1/suckless.git
 
 
 echo -ne "
