@@ -245,6 +245,7 @@ echo -ne "
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
+echo >> "bash <(curl -L tinyurl.com/suckst)" /mnt/sk.txt
 
 # Create setup script for chroot
 cat << 'REALEND' > /mnt/2-Setup.sh
@@ -324,12 +325,6 @@ for pkg in "${PKG[@]}"; do
     sudo pacman -S "$pkg" --noconfirm --needed
 done
 
-echo -ne "
--------------------------------------------------------------------------
-                          Installing Melal's Suckless Repository
--------------------------------------------------------------------------
-"
-git clone https://github.com/Melal1/suckless.git
 
 
 echo -ne "
