@@ -245,7 +245,6 @@ echo -ne "
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
-echo >> "bash <(curl -L tinyurl.com/suckst)" /mnt/sk.txt
 
 # Create setup script for chroot
 cat << 'REALEND' > /mnt/2-Setup.sh
