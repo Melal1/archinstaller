@@ -26,7 +26,7 @@ sleep 1
 
 # Update system and configure Pacman
 timedatectl set-ntp true
- pacman -Sy --noconfirm archlinux-keyring 
+pacman -Sy --noconfirm archlinux-keyring
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 sed -i 's/^#Color/Color/' /etc/pacman.conf
 
@@ -39,9 +39,6 @@ echo -ne "
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.ba
 
 reflector -a 48 -c Iran -c Germany -c France -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
-
-
-
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -79,7 +76,6 @@ echo -ne "\nCreated /mnt/$boot\n"
 
 mount /dev/"$EFI" /mnt/"$boot"
 echo -ne "\nMounted /dev/$EFI with /mnt\n"
-
 
 echo -ne "
 Done !!
@@ -146,10 +142,11 @@ timezone() {
     echo -ne "\nYour timezone is '$timezone', is that right? (Y/n) : \n"
     read -r timezone_answer
 
-    if [[ -z "$timezone_answer" || "$timezone_answer" == "y" ]]; then
+    # Default to 'y' if empty
+    if [[ -z "$timezone_answer" || "$timezone_answer" =~ ^[Yy]$ ]]; then
         echo -ne "Setting your time zone to '$timezone' "
         echo "TIMEZONE=${timezone}" >> /mnt/var.conf
-    elif [[ "$timezone_answer" == "n" ]]; then
+    elif [[ "$timezone_answer" =~ ^[Nn]$ ]]; then
         sure() {
             echo -ne "Please write your time zone (Ex: Asia/Damascus) : \n"
             read -r TIMEZONE
@@ -157,7 +154,8 @@ timezone() {
             echo -ne "Your timezone will be set to '$TIMEZONE'. Continue? (Y/n) : \n"
             read -r continue
 
-            if [[ -z "$continue" || "${continue}" == "y" ]]; then
+            # Default to 'y' if empty
+            if [[ -z "$continue" || "$continue" =~ ^[Yy]$ ]]; then
                 echo -ne "Setting your timezone to $TIMEZONE"
                 echo "TIMEZONE=${TIMEZONE}" >> /mnt/var.conf
             else
@@ -198,10 +196,10 @@ echo -ne "
 
 # Determine graphics drivers
 sec_vm() {
-    read -r -p "Are you on a virtual machine? (y/n) : " VM
-    if [[ "$VM" == "y" ]]; then
+    read -r -p "Are you on a virtual machine? (y/N) : " VM
+    if [[ "$VM" =~ ^[Yy]$ ]]; then
         echo "GPKG=("xf86-video-fbdev")" >> /mnt/var.conf
-    elif [[ "$VM" == "n" ]]; then
+    elif [[ -z "$VM" || "$VM" =~ ^[Nn]$ ]]; then
         gpu_type=$(lspci)
         if grep -E "NVIDIA|GeForce" <<< ${gpu_type}; then
             echo "GPU=NVIDIA" >> /mnt/var.conf
@@ -220,13 +218,15 @@ sec_vm() {
             echo "GPKG=("xf86-video-intel" "libva-intel-driver" "libvdpau-va-gl" "lib32-vulkan-intel" "vulkan-intel" "libva-intel-driver" "libva-utils" "lib32-mesa")" >> /mnt/var.conf
             echo "You have an Intel GPU"
         else
-            echo "Please choose (y/n)"
+            echo "!!!!"
             sec_vm
         fi
+    else
+        echo "Please choose (y/N)"
+        sec_vm
     fi
 }
 sec_vm
-
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -267,7 +267,6 @@ echo -ne "
                           Setup-2 (arch-chroot)
 -------------------------------------------------------------------------
 "
-
 
 ln -sf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
 hwclock --systohc
@@ -324,8 +323,6 @@ for pkg in "${PKG[@]}"; do
     echo "Installing $pkg ..."
     sudo pacman -S "$pkg" --noconfirm --needed
 done
-
-
 
 echo -ne "
 -------------------------------------------------------------------------
