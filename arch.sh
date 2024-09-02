@@ -121,7 +121,7 @@ sec_password() {
     if [[ "$PASS1" == "$PASS2" ]]; then
         echo "PASS=${PASS1}" >> /mnt/var.conf
     else
-        echo -ne "\nERROR !! Passwords don't match.\n\n"
+        echo -ne "\nPasswords don't match , try again \n"
         sec_password
     fi
 }
